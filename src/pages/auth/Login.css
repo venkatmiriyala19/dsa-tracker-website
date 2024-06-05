@@ -15,10 +15,19 @@
   padding: 0 3.5rem;
   border-radius: 40px;
   border: 1px solid #c7c2c2;
-  background-color: rgba(255, 255, 255, 0.5);
-
+  background-color: rgba(255, 255, 255);
+}
+.login-component-heading-container {
+  position: relative;
+  display: flex;
   justify-content: center;
-  align-items: center;
+}
+.login-component-close-mark {
+  position: absolute;
+  right: -5%;
+  margin-top: 1.5vh;
+  font-size: 5vh;
+  cursor: pointer;
 }
 .login-component-heading {
   font-family: "Kanit", sans-serif;
@@ -170,7 +179,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .login-component-google-button {
   max-width: 320px;
@@ -205,6 +214,8 @@
   font-style: normal;
   font-size: 1.4rem;
   margin-top: 0.5rem;
+  text-align: center;
+  margin-bottom: 1.5vh;
 }
 .login-component-signup-redirect {
   text-decoration: none;

@@ -9,8 +9,7 @@ import Signup from "../../pages/auth/Signup";
 
 function Nav() {
   const clientUrl = process.env.CLIENT_URL;
-  const { currentUser, logout } = useAuth(); // Accessing currentUser and logout function from AuthProvider
-
+  const { currentUser, logout } = useAuth();
   const [play] = useSound(loud_btn);
   const [showMenu, setShowMenu] = useState(false);
   const [showLoginModel, setShowLoginModel] = useState(false);
@@ -20,44 +19,40 @@ function Nav() {
     setShowMenu(!showMenu);
   };
 
-  // Function to toggle login modal
   const toggleLoginModal = () => {
     setShowLoginModel((prevState) => !prevState);
   };
 
-  // Function to toggle signup modal
   const toggleSignupModal = () => {
     setShowSignupModel((prevState) => !prevState);
   };
+
   useEffect(() => {
-    // Function to disable body scroll when modal is open
     const disableBodyScroll = () => {
       document.body.style.overflow = "hidden";
     };
 
-    // Function to enable body scroll when modal is closed
     const enableBodyScroll = () => {
       document.body.style.overflow = "visible";
     };
 
-    // Add event listener when component mounts
     if (showLoginModel || showSignupModel) {
       disableBodyScroll();
     } else {
       enableBodyScroll();
     }
 
-    // Remove event listener when component unmounts
     return () => {
       enableBodyScroll();
     };
   }, [showLoginModel, showSignupModel]);
+
   return (
     <>
       <div className="navbar-container">
         <div className="NavContainer">
           <div className="logo">
-            <img src="/images/nav/logo.jpg" alt="Logo"></img>
+            <img src="/images/nav/logo.jpg" alt="Logo" />
             <h4>DSA-Tracker</h4>
           </div>
           <nav className="fill stroke">
@@ -85,7 +80,7 @@ function Nav() {
           {currentUser ? (
             <div className="profile" onClick={play}>
               <span className="name">{currentUser.displayName}</span>
-              <img src={currentUser.photoURL} alt="User Avatar"></img>
+              {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
               <button onClick={() => logout()}>Logout</button>
             </div>
           ) : (
@@ -136,22 +131,18 @@ function Nav() {
         )}
       </nav>
 
-      {/* Modal overlay for Login */}
       {showLoginModel && (
-        <div className="modal-overlay" style={{ zIndex: 2 }}>
-          <div className="modal" style={{ overflowY: "auto" }}>
-            <Login />
-            <button onClick={toggleLoginModal}>Close</button>
+        <div className="modal-overlay">
+          <div className="login-modal">
+            <Login toggleLoginModal={toggleLoginModal} />
           </div>
         </div>
       )}
 
-      {/* Modal overlay for Signup */}
       {showSignupModel && (
-        <div className="modal-overlay" style={{ zIndex: 2 }}>
-          <div className="modal" style={{ overflowY: "auto" }}>
-            <Signup />
-            <button onClick={toggleSignupModal}>Close</button>
+        <div className="modal-overlay">
+          <div className="signup-modal">
+            <Signup toggleSignupModal={toggleSignupModal} />
           </div>
         </div>
       )}

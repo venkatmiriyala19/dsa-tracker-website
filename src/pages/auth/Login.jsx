@@ -6,8 +6,9 @@ import { MdAlternateEmail } from "react-icons/md";
 import { IoLockClosed } from "react-icons/io5";
 import { auth, googleProvider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
+import { IoIosCloseCircle } from "react-icons/io";
 
-const Login = () => {
+const Login = ({ toggleLoginModal }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -22,7 +23,7 @@ const Login = () => {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("/dashboard");
+      navigate("/");
     } catch {
       setError("Failed to log in");
     }
@@ -33,8 +34,7 @@ const Login = () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const { user } = result;
-      // Additional logic can be added here if needed
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       setError("Failed to log in with Google");
     }
@@ -43,7 +43,15 @@ const Login = () => {
   return (
     <div className="outer-container-login">
       <div className="inner-container-login">
-        <h2 className="login-component-heading">Log In</h2>
+        <div className="login-component-heading-container">
+          <h2 className="login-component-heading">
+            Log in
+            <IoIosCloseCircle
+              className="login-component-close-mark"
+              onClick={toggleLoginModal}
+            />
+          </h2>
+        </div>
         {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="login-component-label-and-input-container">
@@ -123,12 +131,12 @@ const Login = () => {
             </button>
           </div>
         </form>
-      </div>
-      <div className="login-component-signup-redirect-description">
-        Need an account?{" "}
-        <a href="/signup" className="login-component-signup-redirect">
-          Signup
-        </a>
+        <div className="login-component-signup-redirect-description">
+          Need an account?{" "}
+          <a href="/signup" className="login-component-signup-redirect">
+            Signup
+          </a>
+        </div>
       </div>
     </div>
   );
