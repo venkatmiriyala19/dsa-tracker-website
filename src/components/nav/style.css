@@ -1,72 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Anta&family=Archivo:ital,wght@0,100..900;1,100..900&family=Kanit&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Poppins:wght@400;500;700&family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&display=swap");
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background-color: white;
+  margin-top: 75px;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal button {
+  margin-top: 10px;
+}
+
 .navbar-container {
-    position: fixed;
-    top: 0vh;
-    border-bottom: 1.5px solid rgb(186, 185, 185);
-    padding: 1vw 0;
-    display: flex;
-    justify-content: center;
-    height: 5.5vh;
-    width: 100%;
-    background: #fff;
-    z-index: 10000;
+  position: fixed;
+  top: 0vh;
+  border-bottom: 1.5px solid rgb(186, 185, 185);
+  padding: 1vw 0;
+  display: flex;
+  justify-content: center;
+  height: 5.5vh;
+  width: 100%;
+  background: #fff;
+  z-index: 10000;
 }
 
 .navbar-container .active {
-    border-bottom: 3px solid #a1e5cd;
+  border-bottom: 3px solid #a1e5cd;
 }
 
 .navbar-container .NavContainer {
-    width: 70%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .navbar-container .NavContainer nav {
-    display: flex;
-    width: 40%;
-    justify-content: space-between;
+  display: flex;
+  width: 40%;
+  justify-content: space-between;
 }
 
 .navbar-container .NavContainer li {
-    list-style-type: none;
-    font-size: 1.2rem;
+  list-style-type: none;
+  font-size: 1.2rem;
 }
 
 .navbar-container .NavContainer li a {
-    text-decoration: none;
-    color: #000;
-    cursor: pointer;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
 }
 
 .navbar-container .NavContainer .logo,
 .navbar-container .NavContainer .profile {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navbar-container .NavContainer .logo img {
-    height: 6vh;
-    width: 4vw;
-    margin-right: 0.5vw;
+  height: 6vh;
+  width: 4vw;
+  margin-right: 0.5vw;
 }
 
 .navbar-container .NavContainer .logo h4 {
-    font-size: 1.4rem;
-    font-weight: 550;
+  font-size: 1.4rem;
+  font-weight: 550;
 }
 
 .navbar-container .NavContainer .profile {
-    cursor: pointer;
+  cursor: pointer;
 }
-
+.navbar-container .NavContainer .login-signup-buttons button {
+  padding: 0.6rem 1.6rem;
+  margin: 1rem;
+  background-color: #a1e5cd;
+  border-radius: 0.3rem;
+  font-family: poppins;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 .navbar-container .NavContainer .profile .name {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 .navbar-container .NavContainer .profile img {
-    height: 5vh;
-    width: 2.5vw;
-    border-radius: 50%;
-    margin-left: 0.5vw;
+  height: 5vh;
+  width: 2.5vw;
+  border-radius: 50%;
+  margin-left: 0.5vw;
 }
