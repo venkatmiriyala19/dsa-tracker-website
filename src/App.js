@@ -39,7 +39,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </Router>
-      <ToastContainer position='top-right' style={{zIndex:9999999}}/>
+      <ToastContainer position='top-right' style={{ zIndex: 9999999 }} />
     </div>
   );
 }
