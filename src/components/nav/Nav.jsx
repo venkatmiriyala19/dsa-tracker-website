@@ -9,55 +9,57 @@ import Signup from "../../pages/auth/Signup";
 
 function Nav() {
   const clientUrl = process.env.CLIENT_URL;
-  const { currentUser, logout } = useAuth(); // Accessing currentUser and logout function from AuthProvider
-
+  const { currentUser, logout } = useAuth();
   const [play] = useSound(loud_btn);
   const [showMenu, setShowMenu] = useState(false);
   const [showLoginModel, setShowLoginModel] = useState(false);
   const [showSignupModel, setShowSignupModel] = useState(false);
+  const isModalOpen = showLoginModel || showSignupModel;
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
-  // Function to toggle login modal
   const toggleLoginModal = () => {
     setShowLoginModel((prevState) => !prevState);
   };
 
-  // Function to toggle signup modal
   const toggleSignupModal = () => {
     setShowSignupModel((prevState) => !prevState);
   };
+
   useEffect(() => {
-    // Function to disable body scroll when modal is open
     const disableBodyScroll = () => {
       document.body.style.overflow = "hidden";
     };
 
-    // Function to enable body scroll when modal is closed
     const enableBodyScroll = () => {
       document.body.style.overflow = "visible";
     };
 
-    // Add event listener when component mounts
     if (showLoginModel || showSignupModel) {
       disableBodyScroll();
     } else {
       enableBodyScroll();
     }
 
-    // Remove event listener when component unmounts
     return () => {
       enableBodyScroll();
     };
   }, [showLoginModel, showSignupModel]);
+  useEffect(() => {
+    if (currentUser) {
+      setShowLoginModel(false);
+      setShowSignupModel(false);
+    }
+  }, [currentUser]);
+
   return (
     <>
-      <div className="navbar-container">
+      <div className={`navbar-container ${isModalOpen ? "blur" : ""}`}>
         <div className="NavContainer">
           <div className="logo">
-            <img src="/images/nav/logo.jpg" alt="Logo"></img>
+            <img src="/images/nav/logo.jpg" alt="Logo" />
             <h4>DSA-Tracker</h4>
           </div>
           <nav className="fill stroke">
@@ -85,13 +87,31 @@ function Nav() {
           {currentUser ? (
             <div className="profile" onClick={play}>
               <span className="name">{currentUser.displayName}</span>
-              <img src={currentUser.photoURL} alt="User Avatar"></img>
-              <button onClick={() => logout()}>Logout</button>
+              {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
+              <button className="Navbar-Logout-Btn" onClick={() => logout()}>
+                <div className="Navbar-Logout-sign">
+                  <svg viewBox="0 0 512 512">
+                    <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
+                  </svg>
+                </div>
+
+                <div className="Navbar-Logout-text">Logout</div>
+              </button>
             </div>
           ) : (
             <div className="login-signup-buttons">
-              <button onClick={toggleLoginModal}>Login</button>
-              <button onClick={toggleSignupModal}>Signup</button>
+              <button
+                onClick={toggleLoginModal}
+                className="login-signup-button-nav"
+              >
+                Login
+              </button>
+              <button
+                onClick={toggleSignupModal}
+                className="login-signup-button-nav"
+              >
+                Signup
+              </button>
             </div>
           )}
         </div>
@@ -136,22 +156,18 @@ function Nav() {
         )}
       </nav>
 
-      {/* Modal overlay for Login */}
       {showLoginModel && (
-        <div className="modal-overlay" style={{ zIndex: 2 }}>
-          <div className="modal" style={{ overflowY: "auto" }}>
-            <Login />
-            <button onClick={toggleLoginModal}>Close</button>
+        <div className="modal-overlay">
+          <div className="login-modal">
+            <Login toggleLoginModal={toggleLoginModal} />
           </div>
         </div>
       )}
 
-      {/* Modal overlay for Signup */}
       {showSignupModel && (
-        <div className="modal-overlay" style={{ zIndex: 2 }}>
-          <div className="modal" style={{ overflowY: "auto" }}>
-            <Signup />
-            <button onClick={toggleSignupModal}>Close</button>
+        <div className="modal-overlay">
+          <div className="signup-modal">
+            <Signup toggleSignupModal={toggleSignupModal} />
           </div>
         </div>
       )}

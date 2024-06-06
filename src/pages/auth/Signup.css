@@ -9,14 +9,24 @@
 .inner-container-signup {
   width: 25vw;
   height: auto;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   flex-direction: column;
   padding: 0 3.5rem;
   border-radius: 40px;
-  border: 1px solid #c7c2c2;
-  background-color: rgba(255, 255, 255, 0.5);
-  margin-top: 10vh;
+  background-color: rgba(255, 255, 255);
+}
+.signup-component-heading-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.signup-component-close-mark {
+  position: absolute;
+  right: -5%;
+  margin-top: 1.5vh;
+  font-size: 5vh;
+  cursor: pointer;
 }
 .signup-component-heading {
   font-family: "Kanit", sans-serif;
@@ -170,6 +180,8 @@
   font-style: normal;
   font-size: 1.4rem;
   margin-top: 0.5rem;
+  text-align: center;
+  margin-bottom: 1.5vh;
 }
 .signup-component-login-redirect {
   text-decoration: none;
@@ -180,7 +192,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .signup-component-google-button {
   max-width: 320px;

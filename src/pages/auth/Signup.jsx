@@ -1,3 +1,4 @@
+// Signup Component
 import React, { useRef, useState } from "react";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +10,9 @@ import { MdAlternateEmail } from "react-icons/md";
 import { BiRename } from "react-icons/bi";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLockClosed } from "react-icons/io5";
+import { IoIosCloseCircle } from "react-icons/io";
 
-const Signup = () => {
+const Signup = ({ toggleSignupModal }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -39,13 +41,14 @@ const Signup = () => {
         name: nameRef.current.value,
         phone: phoneRef.current.value,
       });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       setError("Failed to create an account");
     }
 
     setLoading(false);
   };
+
   const handleGoogleSignUp = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
@@ -56,15 +59,24 @@ const Signup = () => {
         name: user.displayName,
         phone: user.phoneNumber,
       });
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       setError("Failed to sign up with Google");
     }
   };
+
   return (
     <div className="outer-container-signup">
       <div className="inner-container-signup">
-        <h2 className="signup-component-heading">Sign Up</h2>
+        <div className="signup-component-heading-container">
+          <h2 className="signup-component-heading">
+            Sign Up
+            <IoIosCloseCircle
+              className="signup-component-close-mark"
+              onClick={toggleSignupModal}
+            />
+          </h2>
+        </div>
         {error && <p>{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="signup-component-label-and-input-container">
@@ -190,12 +202,12 @@ const Signup = () => {
             </button>
           </div>
         </form>
-      </div>
-      <div className="signup-component-login-redirect-description">
-        Already have an account?{" "}
-        <a href="/login" className="signup-component-login-redirect">
-          Login
-        </a>
+        <div className="signup-component-login-redirect-description">
+          Already have an account?{" "}
+          <a href="/login" className="signup-component-login-redirect">
+            Login
+          </a>
+        </div>
       </div>
     </div>
   );
