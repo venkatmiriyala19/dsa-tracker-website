@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContributionBoard from "./pages/contibutionboard/ContributionBoard";
@@ -14,6 +13,7 @@ import AddNotes from "./components/addnotes/AddNotes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./pages/profile/components/leaderboard/Leaderboard";
+import CookieConsentComponent from "./components/Cookies/CookieConsentComponent";
 
 function App() {
   return (
@@ -40,10 +40,12 @@ function App() {
               element={<Solution problemName={"Kadane's Algorithm"} />}
             />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/cookie" element={<CookieConsentComponent />} />
           </Routes>
         </AuthProvider>
       </Router>
       <ToastContainer position="top-right" style={{ zIndex: 9999999 }} />
+      <CookieConsentComponent /> 
     </div>
   );
 }
