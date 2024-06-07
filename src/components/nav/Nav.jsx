@@ -7,6 +7,8 @@ import "./style.css";
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
 
+
+
 function Nav() {
   const clientUrl = process.env.CLIENT_URL;
   const { currentUser, logout } = useAuth();
@@ -15,6 +17,7 @@ function Nav() {
   const [showLoginModel, setShowLoginModel] = useState(false);
   const [showSignupModel, setShowSignupModel] = useState(false);
   const isModalOpen = showLoginModel || showSignupModel;
+  const [username, setUsername] = useState("");
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -47,12 +50,20 @@ function Nav() {
       enableBodyScroll();
     };
   }, [showLoginModel, showSignupModel]);
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, [currentUser]);
+
   useEffect(() => {
     if (currentUser) {
       setShowLoginModel(false);
       setShowSignupModel(false);
+      setUsername(currentUser.email);
     }
   }, [currentUser]);
+
+  
 
   return (
     <>
@@ -86,7 +97,7 @@ function Nav() {
           </nav>
           {currentUser ? (
             <div className="profile" onClick={play}>
-              <span className="name">{currentUser.displayName}</span>
+              <span className="name">{username}</span>
               {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
               <button className="Navbar-Logout-Btn" onClick={() => logout()}>
                 <div className="Navbar-Logout-sign">
