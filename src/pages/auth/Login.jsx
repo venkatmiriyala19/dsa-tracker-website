@@ -7,6 +7,7 @@ import { IoLockClosed } from "react-icons/io5";
 import { auth, googleProvider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useCookies } from "react-cookie";
 
 const Login = ({ toggleLoginModal }) => {
   const emailRef = useRef();
@@ -15,6 +16,7 @@ const Login = ({ toggleLoginModal }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['user']); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +24,16 @@ const Login = ({ toggleLoginModal }) => {
     try {
       setError("");
       setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
+      const userCredential = await login(emailRef.current.value, passwordRef.current.value);
+      const user = userCredential.user;
+
+      const token = await user.getIdToken();
+      setCookie('userToken', token, {
+        path: '/',
+        secure: true, 
+        sameSite: 'Strict',  
+      });
+
       navigate("/");
     } catch {
       setError("Failed to log in");
@@ -30,10 +41,19 @@ const Login = ({ toggleLoginModal }) => {
 
     setLoading(false);
   };
+
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-      const { user } = result;
+      const user = result.user;
+
+      const token = await user.getIdToken();
+      setCookie('userToken', token, {
+        path: '/',
+        secure: true, 
+        sameSite: 'Strict',  
+      });
+
       navigate("/");
     } catch (error) {
       setError("Failed to log in with Google");
