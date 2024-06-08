@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./pages/profile/components/leaderboard/Leaderboard";
 import CookieConsentComponent from "./components/Cookies/CookieConsentComponent";
 
+
 function App() {
   return (
     <div className="App">
