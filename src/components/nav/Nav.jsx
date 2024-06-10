@@ -20,7 +20,7 @@ function Nav() {
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
   const isModalOpen = showLoginModel || showSignupModel;
   const [username, setUsername] = useState("");
-
+  const [photoURL, setphotoURL] = useState("");
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
@@ -67,11 +67,12 @@ function Nav() {
     if (currentUser) {
       setShowLoginModel(false);
       setShowSignupModel(false);
-      setUsername(currentUser.email);
+      setUsername(currentUser.displayName);
+      setphotoURL(currentUser.photoURL)
     }
   }, [currentUser]);
 
-  
+
 
   return (
     <>
@@ -106,6 +107,7 @@ function Nav() {
           {currentUser ? (
             <div className="profile" onClick={play}>
               <span className="name">{username}</span>
+              <img src={photoURL}></img>
               {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
               <button className="Navbar-Logout-Btn" onClick={() => logout()}>
 

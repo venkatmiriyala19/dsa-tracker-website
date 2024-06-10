@@ -16,7 +16,7 @@ const Login = ({ toggleLoginModal }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['user']); 
+  const [cookies, setCookie] = useCookies(['user']);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,8 +30,8 @@ const Login = ({ toggleLoginModal }) => {
       const token = await user.getIdToken();
       setCookie('userToken', token, {
         path: '/',
-        secure: true, 
-        sameSite: 'Strict',  
+        secure: true,
+        sameSite: 'Strict',
       });
 
       navigate("/");
@@ -46,12 +46,12 @@ const Login = ({ toggleLoginModal }) => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-
+      console.log(user);
       const token = await user.getIdToken();
       setCookie('userToken', token, {
         path: '/',
-        secure: true, 
-        sameSite: 'Strict',  
+        secure: true,
+        sameSite: 'Strict',
       });
 
       navigate("/");
