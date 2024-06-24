@@ -14,7 +14,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Leaderboard from "./pages/profile/components/leaderboard/Leaderboard";
 import CookieConsentComponent from "./components/Cookies/CookieConsentComponent";
-
+import Loading from "./components/loading/Loading";
+import LoadingComponent from "./components/loading/LoadingComponent";
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
         </AuthProvider>
       </Router>
       <ToastContainer position="top-right" style={{ zIndex: 9999999 }} />
-      <CookieConsentComponent /> 
+      <CookieConsentComponent />
     </div>
   );
 }
