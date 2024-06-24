@@ -3,6 +3,7 @@ import ProblemComponent from "./components/ProblemComponent.jsx";
 import "./style.css";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import LoadingComponent from "../../../../components/loading/LoadingComponent.jsx";
+import ErrorMessageConsole from "../../../../components/error/ErrorMessageConsole.jsx";
 
 const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
   const [data, setData] = useState({});
@@ -48,7 +49,15 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <div>
+        {" "}
+        <ErrorMessageConsole
+          message={`Error: ${error.message}`}
+          color="tomato"
+        />
+      </div>
+    );
   }
 
   // Filter data based on selected topics and difficulties
