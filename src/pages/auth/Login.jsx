@@ -9,7 +9,7 @@ import { signInWithPopup } from "firebase/auth";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useCookies } from "react-cookie";
 
-const Login = ({ toggleLoginModal }) => {
+const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -54,7 +54,7 @@ const Login = ({ toggleLoginModal }) => {
         console.error(data.error);
         throw new Error("Failed to log in");
       }
-
+      setIsLoginCompleted(true);
       toggleLoginModal();
 
     } catch (error) {

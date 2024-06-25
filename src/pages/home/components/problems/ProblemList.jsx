@@ -16,7 +16,7 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
   const fetchData = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const userid = getUserIdFromToken(); // Call the function
+      const userid = getUserIdFromToken();
       console.log(userid);
       const response = await fetch(
         `${process.env.REACT_APP_SERVER_URL}/home`,
@@ -31,7 +31,7 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
       console.log(responseData.data);
       setData(responseData.data)
       const token = getUserIdFromToken();
-
+      setLoading(false);
       console.log(token);
     } catch (error) {
       console.error("Fetch error:", error);
@@ -42,7 +42,7 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
 
   useEffect(() => {
     fetchData();
-  }, []); // Empty dependency array means this runs once after the initial render
+  }, []);
 
   if (loading) {
     return (
