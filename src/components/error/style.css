@@ -1,0 +1,26 @@
+.console-container {
+  /* font-family: Khula; */
+  font-size: 4vh;
+  text-align: center;
+  /* height: 200px; */
+  /* width: 600px; */
+  /* display: block; */
+  color: black;
+  font-family: "Special Elite", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: auto;
+  margin-top: 4vh;
+  /* text-transform: uppercase; */
+}
+
+.console-underscore {
+  display: inline-block;
+
+  left: 10px;
+}
+
+.error-gif {
+  height: 30vh;
+}
