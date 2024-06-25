@@ -9,7 +9,6 @@ import Nav from '../../components/nav/Nav.jsx';
 function Home() {
     return (
         <div className="App">
-            <Analytics />
             <Nav />
             <div className="main">
                 <Intro />
