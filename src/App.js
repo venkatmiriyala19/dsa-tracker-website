@@ -19,6 +19,7 @@ import LoadingComponent from "./components/loading/LoadingComponent";
 import DonutChart from "./pages/profile/components/donutchart/DonutChart";
 import TopicSolved from "./pages/profile/components/topicsolved/TopicSolved";
 import ProblemsSolvedTable from "./pages/profile/components/problemssovedtable/ProblemsSolvedTable";
+import DeveloperDetails from "./pages/about/components/developerDetails/DeveloperDetails";
 
 function App() {
   return (
@@ -40,15 +41,19 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/contribution" element={<ContributionBoard />} />
             <Route path="/addnotes" element={<AddNotes />} />
-            <Route path="/donut" element={<DonutChart Easy={20} Medium={30} Hard={40}/>} />
+            <Route
+              path="/donut"
+              element={<DonutChart Easy={20} Medium={30} Hard={40} />}
+            />
             <Route path="/topic" element={<TopicSolved />} />
             <Route
               path="/solution"
               element={<Solution problemName={"Kadane's Algorithm"} />}
             />
-            <Route path="/problemtable" element={<ProblemsSolvedTable/>}/>
+            <Route path="/problemtable" element={<ProblemsSolvedTable />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/cookie" element={<CookieConsentComponent />} />
+            <Route path="/developer" element={<DeveloperDetails />} />
           </Routes>
         </AuthProvider>
       </Router>
