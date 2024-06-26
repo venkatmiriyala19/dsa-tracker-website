@@ -16,6 +16,9 @@ import Leaderboard from "./pages/profile/components/leaderboard/Leaderboard";
 import CookieConsentComponent from "./components/Cookies/CookieConsentComponent";
 import Loading from "./components/loading/Loading";
 import LoadingComponent from "./components/loading/LoadingComponent";
+import DonutChart from "./pages/profile/components/donutchart/DonutChart";
+import TopicSolved from "./pages/profile/components/topicsolved/TopicSolved";
+import ProblemsSolvedTable from "./pages/profile/components/problemssovedtable/ProblemsSolvedTable";
 
 function App() {
   return (
@@ -37,10 +40,13 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/contribution" element={<ContributionBoard />} />
             <Route path="/addnotes" element={<AddNotes />} />
+            <Route path="/donut" element={<DonutChart Easy={20} Medium={30} Hard={40}/>} />
+            <Route path="/topic" element={<TopicSolved />} />
             <Route
               path="/solution"
               element={<Solution problemName={"Kadane's Algorithm"} />}
             />
+            <Route path="/problemtable" element={<ProblemsSolvedTable/>}/>
             <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="/cookie" element={<CookieConsentComponent />} />
           </Routes>
