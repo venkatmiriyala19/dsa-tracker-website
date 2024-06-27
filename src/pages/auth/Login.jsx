@@ -27,8 +27,8 @@ const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
     try {
       const email = emailRef.current.value;
       const password = passwordRef.current.value;
-
-      const response = await fetch(`http://localhost:9002/auth/login`, {
+      console.log(`${process.env.REACT_APP_SERVER_URL}/auth/login`)
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,7 +4,7 @@ import "./style.css";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import LoadingComponent from "../../../../components/loading/LoadingComponent.jsx";
 
-import { getUserIdFromToken } from '../../../../store/userIdFromToken.js';
+import { getUserIdFromToken } from '../../../../store/userInfo.js';
 
 const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
   const [data, setData] = useState({});

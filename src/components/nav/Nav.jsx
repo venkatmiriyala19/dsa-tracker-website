@@ -7,14 +7,16 @@ import loud_btn from "../sounds/loud_btn_clk.wav";
 import "./style.css";
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
+import { getUserName } from "../../store/userInfo";
+import { MdHeight } from "react-icons/md";
 
 
-
-function Nav({ setIsLoginCompleted }) {
+function Nav({ isLoginCompleted, setIsLoginCompleted }) {
   const clientUrl = process.env.CLIENT_URL;
   const { currentUser, logout } = useAuth();
   const [play] = useSound(loud_btn);
   const [showMenu, setShowMenu] = useState(false);
+
   const [showLoginModel, setShowLoginModel] = useState(false);
   const [showSignupModel, setShowSignupModel] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
@@ -104,10 +106,10 @@ function Nav({ setIsLoginCompleted }) {
               </Link>
             </li>
           </nav>
-          {currentUser ? (
+          {isLoginCompleted || currentUser ? (
             <div className="profile" onClick={play}>
-              <span className="name">{username}</span>
-              <img src={photoURL}></img>
+              <span className="name">{getUserName()}</span>
+              <img src='/images/userDummyDp.png' style={{}}></img>
               {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
               <button className="Navbar-Logout-Btn" onClick={() => logout()}>
 

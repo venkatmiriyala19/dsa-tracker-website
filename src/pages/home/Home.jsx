@@ -10,7 +10,7 @@ function Home() {
     const [isLoginCompleted, setIsLoginCompleted] = new useState(false);
     return (
         <div className="App">
-            <Nav setIsLoginCompleted={setIsLoginCompleted} />
+            <Nav setIsLoginCompleted={setIsLoginCompleted} isLoginCompleted={isLoginCompleted} />
             <div className="main">
                 <Intro />
                 <Problems isLoginCompleted={isLoginCompleted} />
