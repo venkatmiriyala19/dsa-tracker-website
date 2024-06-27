@@ -70,11 +70,11 @@ const DonutChart = ({ Easy, Medium, Hard }) => {
           </button>
         </div>
       </div>
-      <div>
+      <div >
         <Doughnut
+          className="user-stats-donutchart-diagaram-container"
           data={data}
           options={options}
-          style={{ width: "230px", height: "230px" }}
         />
       </div>
       <div className="user-stats-donutchart-legend-container">
