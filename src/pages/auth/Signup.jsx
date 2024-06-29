@@ -57,6 +57,7 @@ const Signup = ({ toggleSignupModal }) => {
 
       if (!response.ok) {
         throw new Error("Failed to log in");
+        console.log("sdlkfj")
       }
       else {
 
