@@ -32,7 +32,6 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
 
   const handleLogout = async () => {
     try {
-      await logout();
       removeCookie('userToken', { path: '/' });
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -109,7 +108,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
               <span className="name">{getUserName()}</span>
               <img src='/images/userDummyDp.png' style={{}}></img>
               {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
-              <button className="Navbar-Logout-Btn" onClick={() => logout()}>
+              <button className="Navbar-Logout-Btn" onClick={() => handleLogout()}>
 
                 <div className="Navbar-Logout-sign">
                   <svg viewBox="0 0 512 512">
