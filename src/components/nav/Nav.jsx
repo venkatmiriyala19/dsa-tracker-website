@@ -7,7 +7,6 @@ import loud_btn from "../sounds/loud_btn_clk.wav";
 import "./style.css";
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
-import { getUserName } from "../../store/userInfo";
 import { MdHeight } from "react-icons/md";
 
 
@@ -21,7 +20,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
   const [showSignupModel, setShowSignupModel] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
   const isModalOpen = showLoginModel || showSignupModel;
-
+  const [user, setUser] = useState(null);
   const toggleLoginModal = () => {
     setShowLoginModel((prevState) => !prevState);
   };
@@ -67,6 +66,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
 
     if (token && user) {
       setIsLoginCompleted(true);
+      setUser(user);
     }
   }, [setIsLoginCompleted]);
 
@@ -105,7 +105,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
           </nav>
           {isLoginCompleted ? (
             <div className="profile" onClick={play}>
-              <span className="name">{getUserName()}</span>
+              <span className="name">{user.name}</span>
               <img src='/images/userDummyDp.png' style={{}}></img>
               {/* <img src={currentUser.photoURL} alt="User Avatar" /> */}
               <button className="Navbar-Logout-Btn" onClick={() => handleLogout()}>

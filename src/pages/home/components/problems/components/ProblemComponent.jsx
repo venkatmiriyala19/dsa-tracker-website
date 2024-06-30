@@ -6,14 +6,18 @@ import { IoNewspaperOutline, IoNewspaper } from "react-icons/io5";
 import { MdAddCircleOutline, MdAddCircle } from "react-icons/md";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
-import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import AddNotes from '../../../../../components/addnotes/AddNotes'; // Import the AddNotes component
+import loud_btn from '../../sounds/hover_quest.wav';
+import loud_bt2 from '../../sounds/loud_btn_clk.wav';
 
 export default function ProblemComponent({
     problemName,
     difficultyLevel,
     URL,
 }) {
+    const sound = new Audio(loud_btn);
+    const sound2 = new Audio(loud_bt2);
 
     const navigate = useNavigate();
 
@@ -72,10 +76,12 @@ export default function ProblemComponent({
     };
 
     const toggleDropdown = () => {
+        sound.play();
         setIsDropdownVisible((prevState) => !prevState);
     };
 
     const handleStatusChange = (status) => {
+        sound2.play();
         setSelectedStatus(status);
         setIsDropdownVisible(false);
     };
@@ -176,7 +182,7 @@ export default function ProblemComponent({
                             className="problem-component-icon-container"
                             onMouseEnter={handleMouseEnterAdd}
                             onMouseLeave={handleMouseLeaveAdd}
-                            onClick={handleAddNotesClick} // Show AddNotes on click
+                            onClick={handleAddNotesClick}
                             style={{
                                 transition: "transform 0.3s ease-in-out",
                                 transform: hoveredAdd ? "scale(1.1)" : "scale(1)",
@@ -257,10 +263,16 @@ export default function ProblemComponent({
                             <span style={{ color: statusColors[selectedStatus] }}>
                                 {selectedStatus}
                             </span>
-                            <IoIosArrowDown
-                                className="problem-component-IoIosArrowDown"
-                                onClick={toggleDropdown}
-                            />
+                            {!isDropdownVisible ? (
+                                <IoIosArrowUp className="problem-component-IoIosArrowUp"
+                                    onClick={toggleDropdown} />
+
+                            ) : (
+                                <IoIosArrowDown className="problem-component-IoIosArrowDown"
+                                    onClick={toggleDropdown} />
+
+                            )}
+
                         </div>
                         {isDropdownVisible && (
                             <div className="problem-component-status-dropdown-menu">

@@ -21,7 +21,7 @@ const getUserName = () => {
     }
     try {
         const parsedUser = JSON.parse(user); // Parse the user object from local storage
-        return parsedUser.name; // Directly return the name from the parsed user object
+        return parsedUser.name;
     } catch (error) {
         console.error('Invalid user data:', error);
         return null;
