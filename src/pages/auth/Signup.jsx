@@ -58,7 +58,6 @@ const Signup = ({ toggleSignupModal, setIsLoginCompleted }) => {
         console.log("sdlkfj")
       }
       else {
-        toggleSignupModal();
         try {
           const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
             method: "POST",
@@ -92,12 +91,12 @@ const Signup = ({ toggleSignupModal, setIsLoginCompleted }) => {
               progress: undefined,
               theme: "colored",
             });
+
+            toggleSignupModal();
           } else {
             console.error(data.error);
             throw new Error("Failed to log in");
           }
-
-
         }
         catch (err) {
         }
@@ -114,12 +113,70 @@ const Signup = ({ toggleSignupModal, setIsLoginCompleted }) => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const { user } = result;
-      await addDoc(collection(db, "users"), {
-        userId: user.uid,
-        email: user.email,
-        name: user.displayName,
-        phone: user.phoneNumber,
+
+      const userData = user.providerData;
+
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({
+          name: user.displayName,
+          email: user.email,
+          password: user.uid,
+          photoUrl: user.photoURL,
+          googleUid: user.uid,
+          isGoogleUser: true
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to log in");
+        console.log("sdlkfj")
+      }
+      else {
+        toggleSignupModal();
+        try {
+          const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: userData.email,
+              password: user.uid,
+              isGoogleUser: true
+            }),
+          });
+          if (!response.ok) {
+            throw new Error("Failed to log in");
+          }
+          const data = await response.json();
+          console.log(data);
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', JSON.stringify(data.user));
+            toast.success('Registartion Succesfully completed!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+          } else {
+            console.error(data.error);
+            throw new Error("Failed to log in");
+          }
+        }
+        catch (err) {
+        }
+      }
+
       navigate("/");
     } catch (error) {
       setError("Failed to sign up with Google");

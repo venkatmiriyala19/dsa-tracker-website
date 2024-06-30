@@ -28,11 +28,9 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
         throw new Error("Failed to fetch");
       }
       const responseData = await response.json();
-      console.log(responseData.data);
       setData(responseData.data)
       const token = getUserIdFromToken();
       setLoading(false);
-      console.log(token);
     } catch (error) {
       console.error("Fetch error:", error);
       setError(error);

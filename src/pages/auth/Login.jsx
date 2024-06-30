@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
@@ -8,7 +8,8 @@ import { auth, googleProvider } from "./firebase";
 import { signInWithPopup } from "firebase/auth";
 import { IoIosCloseCircle } from "react-icons/io";
 import { useCookies } from "react-cookie";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -17,6 +18,15 @@ const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['user']);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+      setIsLoginCompleted(true);
+    }
+  }, [setIsLoginCompleted]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +45,7 @@ const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
         body: JSON.stringify({
           email: email,
           password: password,
+          isGoogleUser: false
         }),
       });
 
@@ -42,19 +53,16 @@ const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
         throw new Error("Failed to log in");
       }
 
-      console.log('Login Successful');
-
       const data = await response.json();
 
       if (data.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        setIsLoginCompleted(true);
+        toggleLoginModal();
       } else {
-        console.error(data.error);
         throw new Error("Failed to log in");
       }
-      setIsLoginCompleted(true);
-      toggleLoginModal();
 
     } catch (error) {
       console.error("Login Error:", error);
@@ -64,44 +72,49 @@ const Login = ({ toggleLoginModal, setIsLoginCompleted }) => {
     }
   };
 
-
-
   const handleGoogleLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      try {
+        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: user.email,
+            password: user.uid,
+            isGoogleUser: true
+          }),
+        });
 
-      const response = await fetch(`${process.env.SERVER_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        }),
-      });
+        if (!response.ok) {
+          throw new Error("Failed to log in");
+        }
 
-      if (!response.ok) {
-        throw new Error("Failed to log in");
+        const data = await response.json();
+        if (data.token) {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          setIsLoginCompleted(true);
+          toast.success('Registration successfully completed!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        } else {
+          console.error(data.error);
+          throw new Error("Failed to log in");
+        }
+      } catch (err) {
+        console.error(err);
       }
-      const data = await response.json();
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-
-        localStorage.setItem('user', JSON.stringify(data.user));
-      } else {
-
-        console.error(data.error);
-      }
-      // const token = await user.getIdToken();
-
-      // setCookie('userToken', token, {
-      //   path: '/',
-      //   secure: true,
-      //   sameSite: 'Strict',
-      // });
-
       navigate("/");
     } catch (error) {
       setError("Failed to log in with Google");

@@ -21,11 +21,6 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
   const [showSignupModel, setShowSignupModel] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(['userToken']);
   const isModalOpen = showLoginModel || showSignupModel;
-  const [username, setUsername] = useState("");
-  const [photoURL, setphotoURL] = useState("");
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
 
   const toggleLoginModal = () => {
     setShowLoginModel((prevState) => !prevState);
@@ -39,6 +34,9 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
     try {
       await logout();
       removeCookie('userToken', { path: '/' });
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      setIsLoginCompleted(false);
     } catch {
       console.error("Failed to log out");
     }
@@ -64,15 +62,15 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
     };
   }, [showLoginModel, showSignupModel]);
 
-
   useEffect(() => {
-    if (currentUser) {
-      setShowLoginModel(false);
-      setShowSignupModel(false);
-      setUsername(currentUser.displayName);
-      setphotoURL(currentUser.photoURL)
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (token && user) {
+      setIsLoginCompleted(true);
     }
-  }, [currentUser]);
+  }, [setIsLoginCompleted]);
+
 
 
 
@@ -106,7 +104,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
               </Link>
             </li>
           </nav>
-          {isLoginCompleted || currentUser ? (
+          {isLoginCompleted ? (
             <div className="profile" onClick={play}>
               <span className="name">{getUserName()}</span>
               <img src='/images/userDummyDp.png' style={{}}></img>
