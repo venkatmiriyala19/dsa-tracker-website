@@ -14,7 +14,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Signup = ({ toggleSignupModal }) => {
+const Signup = ({ toggleSignupModal, setIsLoginCompleted }) => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
@@ -34,13 +34,11 @@ const Signup = ({ toggleSignupModal }) => {
       setError("");
       setLoading(true);
 
-
       const email = emailRef.current.value;
       const name = nameRef.current.value;
       const password =
         passwordRef.current.value
       const phoneNo = phoneRef.current.value;
-
 
       const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/register`, {
         method: "POST",
@@ -60,7 +58,7 @@ const Signup = ({ toggleSignupModal }) => {
         console.log("sdlkfj")
       }
       else {
-
+        toggleSignupModal();
         try {
           const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login`, {
             method: "POST",
@@ -77,33 +75,33 @@ const Signup = ({ toggleSignupModal }) => {
             throw new Error("Failed to log in");
           }
 
-
           const data = await response.json();
           if (data.token) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
+
+            setIsLoginCompleted(true);
+
+            toast.success('Registartion Succesfully completed!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
           } else {
             console.error(data.error);
             throw new Error("Failed to log in");
           }
 
-          toast.success('Registartion Succesfully completed!', {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "colored",
-          });
+
         }
         catch (err) {
-
         }
-
       }
-
       navigate("/");
     } catch (error) {
       setError("Failed to create an account");

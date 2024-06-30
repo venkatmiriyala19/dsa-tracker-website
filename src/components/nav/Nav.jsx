@@ -190,7 +190,7 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
       {showSignupModel && (
         <div className="modal-overlay">
           <div className="signup-modal">
-            <Signup toggleSignupModal={toggleSignupModal} />
+            <Signup toggleSignupModal={toggleSignupModal} setIsLoginCompleted={setIsLoginCompleted} />
           </div>
         </div>
       )}
