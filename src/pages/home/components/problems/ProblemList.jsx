@@ -12,32 +12,37 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const topicsPerPage = 1;
-
   const fetchData = async () => {
     try {
+      setLoading(true);
+
+      // Simulating a delay for demonstration
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      const userid = getUserIdFromToken();
-      console.log(userid);
-      const response = await fetch(
-        `${process.env.REACT_APP_SERVER_URL}/home`,
-        {
-          method: "GET",
-        }
-      );
+
+      const token = localStorage.getItem('token');
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/home`, {
+        method: 'GET',
+        headers: headers,
+      });
+
       if (!response.ok) {
-        throw new Error("Failed to fetch");
+        throw new Error('Failed to fetch');
       }
+
       const responseData = await response.json();
-      setData(responseData.data)
-      const token = getUserIdFromToken();
+      setData(responseData.data);
       setLoading(false);
     } catch (error) {
-      console.error("Fetch error:", error);
+      console.error('Fetch error:', error);
       setError(error);
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchData();
   }, []);
