@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 92%;
+  width: 90%;
 }
 
 .container-showTag {
@@ -13,7 +13,25 @@
   font-size: 1.6rem;
   font-weight: 550;
 }
-
+.progress-bar-inner {
+  width: 30vw;
+  height: 2.7vh;
+}
 .container-showTag {
   color: rgb(65, 64, 64);
+}
+@media (max-width: 430px) {
+  .progress-bar {
+    width: 100%;
+  }
+  .progress-bar-inner {
+    width: 70vw;
+  }
+  .container-showTag {
+    font-size: 0.8rem;
+  }
+  .container-showTag span {
+    font-size: 1rem;
+    font-weight: 550;
+  }
 }
