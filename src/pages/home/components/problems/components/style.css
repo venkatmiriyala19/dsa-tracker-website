@@ -287,3 +287,111 @@
     font-size: 6vh;
   }
 }
+@media (device-width: 430px) {
+  .problem-rectangle {
+    padding: 1vh 0;
+    padding-bottom: 0.5vh;
+  }
+  .problem-rectangle-heading {
+    font-size: 2vh;
+    min-height: 6vh;
+    max-width: 68%;
+  }
+  .problem-component-4icon {
+    width: 5vw;
+  }
+  .problem-component-icon-outer-container {
+    margin-left: 2%;
+  }
+  .problem-component-icon-container {
+    padding-left: 0.3vw;
+  }
+  .problem-completion-indicator {
+    font-size: 2vh;
+    width: 30%;
+    height: 30%;
+    border-radius: 4vw;
+  }
+  .problem-difficulty-indicator {
+    font-size: 2vh;
+    width: 25%;
+    height: 25%;
+    border-radius: 4rem;
+    /* right: 2vw; */
+  }
+  .GFG-logo-problem-solve-rectangle {
+    font-size: 6vh;
+  }
+}
+@media (device-width: 390px) {
+  .problem-rectangle {
+    padding: 1vh 0;
+    padding-bottom: 0.5vh;
+  }
+  .problem-rectangle-heading {
+    font-size: 2vh;
+    min-height: 6vh;
+    max-width: 68%;
+  }
+  .problem-component-4icon {
+    width: 5vw;
+  }
+  .problem-component-icon-outer-container {
+    margin-left: 2%;
+  }
+  .problem-component-icon-container {
+    padding-left: 0.3vw;
+  }
+  .problem-completion-indicator {
+    font-size: 2vh;
+    width: 30%;
+    height: 30%;
+    border-radius: 4vw;
+  }
+  .problem-difficulty-indicator {
+    font-size: 2vh;
+    width: 25%;
+    height: 25%;
+    border-radius: 4rem;
+    /* right: 2vw; */
+  }
+  .GFG-logo-problem-solve-rectangle {
+    font-size: 6vh;
+  }
+}
+@media (max-width: 420px) {
+  .problem-rectangle {
+    padding: 1vh 0;
+    padding-bottom: 0.5vh;
+  }
+  .problem-rectangle-heading {
+    font-size: 2vh;
+    min-height: 6vh;
+    max-width: 68%;
+  }
+  .problem-component-4icon {
+    width: 5vw;
+  }
+  .problem-component-icon-outer-container {
+    margin-left: 2%;
+  }
+  .problem-component-icon-container {
+    padding-left: 0.3vw;
+  }
+  .problem-completion-indicator {
+    font-size: 2vh;
+    width: 30%;
+    height: 30%;
+    border-radius: 4vw;
+  }
+  .problem-difficulty-indicator {
+    font-size: 2vh;
+    width: 25%;
+    height: 25%;
+    border-radius: 4rem;
+    /* right: 2vw; */
+  }
+  .GFG-logo-problem-solve-rectangle {
+    font-size: 6vh;
+  }
+}
