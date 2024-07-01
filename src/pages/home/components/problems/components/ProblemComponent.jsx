@@ -254,12 +254,12 @@ export default function ProblemComponent({
                 {selectedStatus}
               </span>
               {!isDropdownVisible ? (
-                <IoIosArrowUp
+                <IoIosArrowDown
                   className="problem-component-IoIosArrowUp"
                   onClick={toggleDropdown}
                 />
               ) : (
-                <IoIosArrowDown
+                <IoIosArrowUp
                   className="problem-component-IoIosArrowDown"
                   onClick={toggleDropdown}
                 />
