@@ -1,8 +1,35 @@
 .problems {
-    display: grid;
-    grid-template-columns: 75% 25%;
-    width: 65%;
-    margin: 0 auto;
-    margin-top: 5vh;
+  display: grid;
+  grid-template-columns: 75% 25%;
+  width: 65%;
+  margin: 0 auto;
+  margin-top: 5vh;
+}
+@media (max-width: 430px) {
+  .problems {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-left: 10vw;
+  }
+  .Topics {
+    width: 100vw;
+  }
+}
+@media (max-width: 380px) {
+  .problems {
+    width: 110vw;
+  }
+  .Topics {
+    width: 110vw;
+  }
+}
 
+@media (max-width: 330px) {
+  .problems {
+    width: 130vw;
+  }
+  .Topics {
+    width: 130vw;
+  }
 }
