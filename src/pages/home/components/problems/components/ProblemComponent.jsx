@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import "./style.css";
 import GFG from "./styles/GFG.svg";
 import { IoNewspaperOutline, IoNewspaper } from "react-icons/io5";
@@ -54,7 +54,7 @@ export default function ProblemComponent({
     }
 
     const navigateToSolution = () => {
-        navigate("/solution");
+        navigate('/solution');
     };
 
     const [showText, setShowText] = useState(false);
@@ -166,6 +166,7 @@ export default function ProblemComponent({
 
     const handleStatusChange = async (status) => {
         sound2.play();
+        console.log(status)
         try {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/problemProgress/problemStatus`, {
                 method: "POST",
@@ -179,6 +180,7 @@ export default function ProblemComponent({
                     status
                 }),
             });
+
             if (!response.ok) {
                 errorToast();
             }
@@ -192,7 +194,6 @@ export default function ProblemComponent({
             errorToast();
         }
     };
-
 
     const statusColors = {
         Solved: "#50c878",
@@ -213,13 +214,6 @@ export default function ProblemComponent({
     const mainDivStyle = {
         backgroundColor: backgroundColor,
     };
-    const handleAddNotesClick = () => {
-        setIsAddNotesVisible(true); // Show the AddNotes component
-    };
-
-    const handleAddNotesClose = () => {
-        setIsAddNotesVisible(false); // Hide the AddNotes component
-    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -237,6 +231,14 @@ export default function ProblemComponent({
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    const handleAddNotesClick = () => {
+        setIsAddNotesVisible(true);
+    };
+
+    const handleAddNotesClose = () => {
+        setIsAddNotesVisible(false);
+    };
 
     return (
         <>
@@ -404,127 +406,11 @@ export default function ProblemComponent({
                     </div>
                 </div>
             </div>
-            <div
-                className="problem-component-icon-container"
-                onMouseEnter={handleMouseEnterAdd}
-                onMouseLeave={handleMouseLeaveAdd}
-                onClick={handleAddNotesClick}
-                style={{
-                    transition: "transform 0.3s ease-in-out",
-                    transform: hoveredAdd ? "scale(1.1)" : "scale(1)",
-                    display: "inline-block",
-                    marginLeft: "1rem",
-                    marginTop: "0.3rem",
-                }}
-            >
-                {hoveredAdd ? (
-                    <MdAddCircle
-                        className="problem-component-MdAddCircle problem-component-4icon"
-                        title={showText ? "Add Notes" : ""}
-                    />
-                ) : (
-                    <MdAddCircleOutline className="problem-component-MdAddCircle problem-component-4icon" />
-                )}
-            </div>
-            <div
-                className="problem-component-icon-container"
-                onMouseEnter={handleMouseEnterStar}
-                onMouseLeave={handleMouseLeaveStar}
-                style={{
-                    transition: "transform 0.3s ease-in-out",
-                    transform: hoveredStar ? "scale(1.1)" : "scale(1)",
-                    display: "inline-block",
-                    marginLeft: "1rem",
-                    marginTop: "0.3rem",
-                }}
-            >
-                {hoveredStar ? (
-                    <FaStar
-                        className="problem-component-FaStar problem-component-4icon"
-                        title={showText ? "Add to Favourites" : ""}
-                    />
-                ) : (
-                    <FaRegStar className="problem-component-FaStar problem-component-4icon" />
-                )}
-            </div>
-            <div
-                className="problem-component-icon-container"
-                onMouseEnter={handleMouseEnterBookMark}
-                onMouseLeave={handleMouseLeaveBookMark}
-                style={{
-                    transition: "transform 0.3s ease-in-out",
-                    transform: hoveredBookMark ? "scale(1.1)" : "scale(1)",
-                    display: "inline-block",
-                    marginLeft: "1rem",
-                    marginTop: "0.3rem",
-                }}
-            >
-                {hoveredBookMark ? (
-                    <IoBookmark
-                        className="problem-component-IoBookmark problem-component-4icon"
-                        title={showText ? "Bookmark" : ""}
-                    />
-                ) : (
-                    <IoBookmarkOutline className="problem-component-IoBookmark problem-component-4icon" />
-                )}
-            </div>
-            <div
-                className="problem-completion-indicator"
-                style={{ color: "black" }}
-            >
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    <span style={{ color: statusColors[selectedStatus] }}>
-                        {selectedStatus}
-                    </span>
-                    {!isDropdownVisible ? (
-                        <IoIosArrowDown
-                            className="problem-component-IoIosArrowUp"
-                            onClick={toggleDropdown}
-                        />
-                    ) : (
-                        <IoIosArrowUp
-                            className="problem-component-IoIosArrowDown"
-                            onClick={toggleDropdown}
-                        />
-                    )}
+            {isAddNotesVisible && (
+                <div className="addnotes-modal">
+                    <AddNotes onClose={handleAddNotesClose} />
                 </div>
-                {isDropdownVisible && (
-                    <div className="problem-component-status-dropdown-menu">
-                        <div
-                            className="problem-component-status-dropdown-menu-option-1"
-                            onClick={() => handleStatusChange("Solved")}
-                        >
-                            Solved
-                        </div>
-                        <div
-                            className="problem-component-status-dropdown-menu-option-2"
-                            onClick={() => handleStatusChange("Revision")}
-                        >
-                            Revision
-                        </div>
-                        <div
-                            className="problem-component-status-dropdown-menu-option-3"
-                            onClick={() => handleStatusChange("Unsolved")}
-                        >
-                            Unsolved
-                        </div>
-                    </div>
-                )}
-            </div>
-
-            {
-                isAddNotesVisible && (
-                    <div className="addnotes-modal">
-                        <AddNotes onClose={handleAddNotesClose} />
-                    </div>
-                )
-            }
+            )}
         </>
     );
 }
