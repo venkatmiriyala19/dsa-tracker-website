@@ -5,6 +5,7 @@ import useSound from "use-sound";
 import { useCookies } from "react-cookie";
 import loud_btn from "../sounds/loud_btn_clk.wav";
 import "./style.css";
+import './style2.css';
 import Login from "../../pages/auth/Login";
 import Signup from "../../pages/auth/Signup";
 import { MdHeight } from "react-icons/md";
@@ -70,11 +71,16 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
     }
   }, [setIsLoginCompleted]);
 
+  const toggleMenu = () => {
+    setShowMenu(prevState => !prevState);
+  };
+
 
 
 
   return (
     <>
+    
       <div className={`navbar-container ${isModalOpen ? "blur" : ""}`}>
         <div className="NavContainer">
           <div className="logo">
@@ -137,10 +143,21 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
         </div>
       </div>
 
-      <nav className="nav-responsive">
+      <div className="dsa-NavContainer">
+          <div className="logo">
+            <img src="/images/nav/logo.jpg" alt="Logo" />
+            <h4>DSA-Tracker</h4>
+          </div>
+      <nav className="dsa-nav-responsive" >
+      <div className="nav-mob-open" onClick={toggleMenu}>
+          &#9776;
+        </div>
+      
         {showMenu && (
-          <ul className="responsive-menu">
-            <div className="tags show">
+          <ul className={`dsa-responsive-menu ${showMenu ? "open" : ""}`}>
+            <button onClick={toggleMenu}> menu </button>
+            <div className="dsa-tags show">
+            
               <li>
                 <Link to={clientUrl} className="active" onClick={play}>
                   Home
@@ -171,10 +188,46 @@ function Nav({ isLoginCompleted, setIsLoginCompleted }) {
                   Contact Us
                 </Link>
               </li>
+              {user ? (
+              <>
+                <li>
+                  <Link to="/profile">Profile</Link>
+                </li>
+                <li>
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <button onClick={toggleLoginModal}>Login</button>
+                </li>
+                <li>
+                  <button onClick={toggleSignupModal}>Sign Up</button>
+                </li>
+              </>
+            )}
             </div>
           </ul>
         )}
       </nav>
+      </div>
+
+      {showLoginModel && (
+        <div className="modal-overlay">
+          <div className="login-modal">
+            <Login toggleLoginModal={toggleLoginModal} setIsLoginCompleted={setIsLoginCompleted} />
+          </div>
+        </div>
+      )}
+
+      {showSignupModel && (
+        <div className="modal-overlay">
+          <div className="signup-modal">
+            <Signup toggleSignupModal={toggleSignupModal} />
+          </div>
+        </div>
+      )}
 
       {showLoginModel && (
         <div className="modal-overlay">
