@@ -36,6 +36,8 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
 
       const responseData = await response.json();
       setData(responseData.data);
+      console.log(responseData.data)
+
       setLoading(false);
     } catch (error) {
       console.error('Fetch error:', error);
@@ -109,6 +111,7 @@ const ProblemsList = ({ selectedTopics, selectedDifficulties }) => {
               problemName={problem.Problem}
               difficultyLevel={problem.Difficulty}
               URL={problem.URL}
+              problemId={problem._id}
             />
           ))}
         </div>

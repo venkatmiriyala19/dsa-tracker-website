@@ -7,19 +7,51 @@ import { MdAddCircleOutline, MdAddCircle } from "react-icons/md";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { IoBookmarkOutline, IoBookmark } from "react-icons/io5";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import AddNotes from '../../../../../components/addnotes/AddNotes'; // Import the AddNotes component
+import AddNotes from '../../../../../components/addnotes/AddNotes';
 import loud_btn from '../../sounds/hover_quest.wav';
 import loud_bt2 from '../../sounds/loud_btn_clk.wav';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProblemComponent({
     problemName,
     difficultyLevel,
     URL,
+    problemId
 }) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user._id;
+    const token = localStorage.getItem('token');
+
     const sound = new Audio(loud_btn);
     const sound2 = new Audio(loud_bt2);
 
     const navigate = useNavigate();
+    const successToast = () => {
+        toast.success('Successfull!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+
+    const errorToast = () => {
+        toast.error('failed!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
 
     const navigateToSolution = () => {
         navigate('/solution');
@@ -33,7 +65,7 @@ export default function ProblemComponent({
     const [isDropdownVisible, setIsDropdownVisible] = useState(false);
     const [selectedStatus, setSelectedStatus] = useState("Unsolved");
     const [selectedDifficulties, setSelectedDifficulties] = useState([]);
-    const [isAddNotesVisible, setIsAddNotesVisible] = useState(false); // State for AddNotes visibility
+    const [isAddNotesVisible, setIsAddNotesVisible] = useState(false);
 
     const handleMouseEnterSolution = () => {
         setHoveredSolution(true);
@@ -55,9 +87,32 @@ export default function ProblemComponent({
         setShowText(false);
     };
 
-    const handleMouseEnterStar = () => {
-        setHoveredStar(true);
-        setShowText(true);
+    const handleMouseEnterStar = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/problemProgress/favourites`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId,
+                    problemId
+                }),
+            });
+
+            if (!response.ok) {
+                errorToast()
+            }
+            else {
+                setHoveredStar(true);
+                successToast();
+            }
+        }
+        catch (err) {
+            errorToast()
+        }
+
     };
 
     const handleMouseLeaveStar = () => {
@@ -65,9 +120,38 @@ export default function ProblemComponent({
         setShowText(false);
     };
 
-    const handleMouseEnterBookMark = () => {
-        setHoveredBookMark(true);
-        setShowText(true);
+
+    const errorMsg = () => {
+        throw new Error("Failed to bookmark the problem");
+    }
+
+    const handleMouseEnterBookMark = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/problemProgress/bookmark`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId,
+                    problemId
+                }),
+            });
+
+            if (!response.ok) {
+                errorToast();
+            }
+            else {
+                setHoveredBookMark(true);
+                successToast();
+            }
+
+        }
+        catch (err) {
+            errorToast()
+        }
+
     };
 
     const handleMouseLeaveBookMark = () => {
@@ -80,10 +164,33 @@ export default function ProblemComponent({
         setIsDropdownVisible((prevState) => !prevState);
     };
 
-    const handleStatusChange = (status) => {
+    const handleStatusChange = async (status) => {
         sound2.play();
-        setSelectedStatus(status);
-        setIsDropdownVisible(false);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/problemProgress/problemStatus`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    userId,
+                    problemId,
+                    status
+                }),
+            });
+            if (!response.ok) {
+                errorToast();
+            }
+            else {
+                successToast();
+                setSelectedStatus(status);
+                setIsDropdownVisible(false);
+            }
+        }
+        catch (err) {
+            errorToast();
+        }
     };
 
     const statusColors = {
@@ -124,11 +231,11 @@ export default function ProblemComponent({
     }, []);
 
     const handleAddNotesClick = () => {
-        setIsAddNotesVisible(true); // Show the AddNotes component
+        setIsAddNotesVisible(true);
     };
 
     const handleAddNotesClose = () => {
-        setIsAddNotesVisible(false); // Hide the AddNotes component
+        setIsAddNotesVisible(false);
     };
 
     return (
@@ -204,8 +311,7 @@ export default function ProblemComponent({
                         </div>
                         <div
                             className="problem-component-icon-container"
-                            onMouseEnter={handleMouseEnterStar}
-                            onMouseLeave={handleMouseLeaveStar}
+                            onClick={handleMouseEnterStar}
                             style={{
                                 transition: "transform 0.3s ease-in-out",
                                 transform: hoveredStar ? "scale(1.1)" : "scale(1)",
@@ -227,8 +333,7 @@ export default function ProblemComponent({
                         </div>
                         <div
                             className="problem-component-icon-container"
-                            onMouseEnter={handleMouseEnterBookMark}
-                            onMouseLeave={handleMouseLeaveBookMark}
+                            onClick={handleMouseEnterBookMark}
                             style={{
                                 transition: "transform 0.3s ease-in-out",
                                 transform: hoveredBookMark ? "scale(1.1)" : "scale(1)",
