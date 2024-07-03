@@ -1,48 +1,76 @@
 .intro {
-    width: 100%;
-    border-bottom: 2px dashed rgb(185, 194, 190);
+  width: 100%;
+  border-bottom: 2px dashed rgb(185, 194, 190);
 }
 
 .hero-content {
-    display: flex;
-    justify-content: center;
-    height: auto;
-    align-items: center;
-    margin: 0 auto;
-    color: rgb(65, 64, 64);
+  display: flex;
+  justify-content: center;
+  height: auto;
+  align-items: center;
+  /* margin: 0 auto; */
+  color: rgb(65, 64, 64);
+  flex-wrap: wrap;
 }
 
 .dsa-photo-1 img {
-    width: 15vw;
-    height: 32vh;
+  width: 16vw;
+  height: 32vh;
 }
 
 .dsa-content {
-    margin: 0 2vw;
-
+  margin: 0 2vw;
 }
 
 .dsa-description h2 {
-    font-size: 1.7rem;
-}
-
-.header-dsa {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 2rem;
-    font-weight: 500;
+  font-size: 2vw;
 }
 
 .dsa-description {
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 0.97rem;
-    line-height: 1.2rem;
-    width: 36vw;
-    text-align: justify;
-
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 1vw;
+  line-height: 1.2vw;
+  width: 36vw;
+  text-align: justify;
 }
 
 .dsa-photo-2 img {
-    margin-top: 2vh;
-    width: 14vw;
-    height: 26vh;
+  width: 15vw;
+  height: 30vh;
+}
+
+@media (max-width: 1000px) {
+  .dsa-description {
+    align-items: center;
+    justify-content: center;
+  }
+  .dsa-description h2 {
+    font-size: 4vw;
+    margin-top: 0;
+    text-align: center;
+  }
+
+  .dsa-description {
+    font-size: 2.5vw;
+    line-height: 3vw;
+    width: 80vw;
+    margin: 0 1vw;
+  }
+  .dsa-photo-1 {
+    display: none;
+  }
+  .dsa-photo-1 img,
+  .dsa-photo-2 img {
+    display: none;
+    width: 40vw;
+    height: auto;
+  }
+  .dsa-photo-2 img {
+    display: none;
+  }
+
+  .hero-content {
+    flex-direction: column;
+  }
 }
